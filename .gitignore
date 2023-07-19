@@ -1,0 +1,18 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/openai-demo/v17
+/End_to_end_Solutions/AOAIVirtualAssistant/src/botwebapp/Bot.Web/.vs/Bot/FileContentIndex
+/End_to_end_Solutions/AOAIVirtualAssistant/src/botwebapp/Bot.Web/obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.cs
+/End_to_end_Solutions/AOAIVirtualAssistant/src/botwebapp/Bot.Web/obj/Debug/net7.0/Bot.Web.assets.cache
+/End_to_end_Solutions/AOAIVirtualAssistant/src/botwebapp/Bot.Web/obj/Debug/net7.0/Bot.Web.csproj.AssemblyReference.cache
+/End_to_end_Solutions/AOAIVirtualAssistant/src/botwebapp/Bot.Web/obj/Debug/net7.0/Bot.Web.GeneratedMSBuildEditorConfig.editorconfig
+/End_to_end_Solutions/AOAIVirtualAssistant/src/botwebapp/Bot.Web/obj/Bot.Web.csproj.nuget.dgspec.json
+/End_to_end_Solutions/AOAIVirtualAssistant/src/botwebapp/Bot.Web/obj/Bot.Web.csproj.nuget.g.props
+/End_to_end_Solutions/AOAIVirtualAssistant/src/botwebapp/Bot.Web/obj/Bot.Web.csproj.nuget.g.targets
+/End_to_end_Solutions/AOAIVirtualAssistant/src/botwebapp/Bot.Web/obj/project.assets.json
+/End_to_end_Solutions/AOAIVirtualAssistant/src/botwebapp/Bot.Web/obj/project.nuget.cache
+/.vs
+/End_to_end_Solutions/AOAISearchDemo/.vs
+/End_to_end_Solutions/AOAIVirtualAssistant/src/botwebapp/Bot.Web/.vs

@@ -18,7 +18,7 @@ param searchServiceName string = ''
 param searchServiceResourceGroupName string = ''
 param searchServiceResourceGroupLocation string = location
 
-param searchServiceSkuName string = 'standard'
+param searchServiceSkuName string = 'basic'
 param searchIndexName string = 'gptkbindex'
 
 param storageAccountName string = ''
@@ -53,7 +53,7 @@ param sqlResourceGroupName string = ''
 param formRecognizerServiceName string = ''
 param formRecognizerResourceGroupName string = ''
 param formRecognizerResourceGroupLocation string = location
-param formRecognizerSkuName string = 'S0'
+param formRecognizerSkuName string = 'F0'
 
 @description('Id of the user or app to assign application roles')
 param principalId string = ''
