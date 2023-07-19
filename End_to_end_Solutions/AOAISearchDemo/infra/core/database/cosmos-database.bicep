@@ -49,35 +49,35 @@ resource account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
 
 // Account roles
 
-resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions@2023-04-15' = {
-  parent: account
-  name: guid('sql-role-definition-', principalId, account.id)
-  properties: {
-    roleName: 'Cosmos DB metadata reader and container creator role'
-    type: 'CustomRole'
-    assignableScopes: [
-      account.id
-    ]
-    permissions: [
-      {
-        dataActions: [
-          'Microsoft.DocumentDB/databaseAccounts/readMetadata'
-          'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/create'
-        ]
-      }
-    ]
-  }
-}
+// resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions@2023-04-15' = {
+//   parent: account
+//   name: guid('sql-role-definition-', principalId, account.id)
+//   properties: {
+//     roleName: 'CosmosDB metadata reader and container creator role'
+//     type: 'CustomRole'
+//     assignableScopes: [
+//       account.id
+//     ]
+//     permissions: [
+//       {
+//         dataActions: [
+//           'Microsoft.DocumentDB/databaseAccounts/readMetadata'
+//           'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/create'
+//         ]
+//       }
+//     ]
+//   }
+// }
 
-resource sqlRoleAssignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2023-04-15' = {
-  parent: account
-  name: guid('sql-role-definition-', principalId, account.id)
-  properties: {
-    roleDefinitionId: sqlRoleDefinition.id
-    principalId: principalId
-    scope: account.id
-  }
-}
+// resource sqlRoleAssignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2023-04-15' = {
+//   parent: account
+//   name: guid('sql-role-definition-', principalId, account.id)
+//   properties: {
+//     roleDefinitionId: sqlRoleDefinition.id
+//     principalId: principalId
+//     scope: account.id
+//   }
+// }
 
 // Cosmos Database
 

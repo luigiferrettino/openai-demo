@@ -44,7 +44,7 @@ module sqlConnectionStringSecret '../keyvault/keyvault-secret.bicep' = if(addKey
   params: {
     keyVaultName: keyVaultName
     secretName: 'SQL-CONNECTION-STRING'
-    secretValue: concat('Driver={ODBC Driver 18 for SQL Server};',
+    secretValue: concat('Driver={ODBC Driver 17 for SQL Server};',
      'Server=tcp:',
      sqlServer.properties.fullyQualifiedDomainName, 
      ',1433;Database=', sqlDatabaseName, 
@@ -54,14 +54,14 @@ module sqlConnectionStringSecret '../keyvault/keyvault-secret.bicep' = if(addKey
   }
 }
 
-resource sqlAllowAllWindowsAzureIps 'Microsoft.Sql/servers/firewallRules@2022-05-01-preview' = {
-  name: 'AllowAllWindowsAzureIps'
-  parent: sqlServer
-  properties: {
-    startIpAddress: '0.0.0.0'
-    endIpAddress: '0.0.0.0'
-  }
-}
+// resource sqlAllowAllWindowsAzureIps 'Microsoft.Sql/servers/firewallRules@2022-05-01-preview' = {
+//   name: 'AllowAllWindowsAzureIps'
+//   parent: sqlServer
+//   properties: {
+//     startIpAddress: '0.0.0.0'
+//     endIpAddress: '0.0.0.0'
+//   }
+// }
 
 output sqlServerName string = sqlServer.name
 output sqlServerFqdn string = '${sqlServerName}.database.windows.net'
