@@ -10,16 +10,17 @@ class ApproachClassifier(Approach):
         self.logger = logger
     
     def run(self, history: List[str], bot_config) -> ApproachType:
-        response = openai.Completion.create(
-            prompt=history[-1]['utterance'] + ' ->',
-            **bot_config["approach_classifier"]["openai_settings"]
-            )
+        # response = openai.Completion.create(
+        #     prompt=history[-1]['utterance'] + ' ->',
+        #     **bot_config["approach_classifier"]["openai_settings"]
+        #     )
 
-        q :str = response['choices'][0]['text'].strip()
-        self.log_aoai_response_details(f'Classification Prompt:{history[-1]["utterance"]}', f'Response: {q}', response)
+        q :str = "1" # response['choices'][0]['text'].strip()
+        # self.log_aoai_response_details(f'Classification Prompt:{history[-1]["utterance"]}', f'Response: {q}', response)
 
         if q == "1":
-            return ApproachType.structured
+            return ApproachType.telemetry
+            # return ApproachType.structured
         elif q == "2":
             return ApproachType.unstructured
         elif q == "3":
@@ -28,8 +29,9 @@ class ApproachClassifier(Approach):
             # Continuation: Return last question type from history if it exists
             if len(history) > 1:
                 last_question_type = history[-2]['question_type']
-                if last_question_type == "structured_query":
-                    return ApproachType.structured
+                if last_question_type == "telemetry_query":
+                    return ApproachType.telemetry
+                    # return ApproachType.structured
                 elif last_question_type == "unstructured_query":
                     return ApproachType.unstructured
                 elif last_question_type == "chit_chat":

@@ -17,8 +17,11 @@ class AccessManager:
     def map_approach_to_resource(self, approach):
         if approach == ApproachType.unstructured:
             return "COGNITIVE_SEARCH"
+        elif approach == ApproachType.telemetry:
+            return "KQL_DB"
         elif approach == ApproachType.structured:
             return "SQL_DB"
+            # return "SQL_DB"
         else:
             raise Exception(f"Unknown approach {approach}")
     
@@ -26,6 +29,8 @@ class AccessManager:
         if resource == "COGNITIVE_SEARCH":
             return ApproachType.unstructured.value
         elif resource == "SQL_DB":
-            return ApproachType.structured.value
+            return ApproachType.telemetry.value
+        elif resource == "KQL_DB":
+            return ApproachType.telemetry.value
         else:
             raise Exception(f"Unknown resource {resource}")

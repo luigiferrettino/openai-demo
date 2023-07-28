@@ -12,6 +12,7 @@ class ParticipantType(Enum):
 
 class DialogClassification(Enum):
     chit_chat = "chit_chat"
+    telemetry_query = "telemetry_query"
     structured_query = "structured_query"
     unstructured_query = "unstructured_query"
 

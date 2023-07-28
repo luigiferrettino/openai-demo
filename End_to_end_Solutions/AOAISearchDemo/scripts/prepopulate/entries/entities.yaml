@@ -27,3 +27,5 @@ resources:
     resource_type: "COGNITIVE_SEARCH"
   - resource_id: "66b6899c-2bff-4892-b3d0-56488859d76d"
     resource_type: "SQL_DB"
+  - resource_id: "66b6899c-2bff-4892-b3d0-56488859dkql"
+    resource_type: "KQL_DB"

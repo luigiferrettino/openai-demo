@@ -11,6 +11,7 @@ from azure.storage.blob import BlobServiceClient
 from backend.approaches.approach_classifier import ApproachClassifier
 from backend.approaches.chatunstructured import ChatUnstructuredApproach
 from backend.approaches.chatstructured import ChatStructuredApproach
+from backend.approaches.chattelemetry import ChatTelemetryApproach
 from common.contracts.chat_session import ChatSession, ParticipantType, DialogClassification
 from backend.config import DefaultConfig
 from backend.contracts.chat_response import Answer, ApproachType, ChatResponse
@@ -46,7 +47,8 @@ logger = DefaultConfig.logger
 chat_approaches = {
     ApproachType.unstructured.value: ChatUnstructuredApproach(search_client, DefaultConfig.KB_FIELDS_SOURCEPAGE,
                                         DefaultConfig.KB_FIELDS_CONTENT, logger, search_threshold_percentage = DefaultConfig.SEARCH_THRESHOLD_PERCENTAGE),
-    ApproachType.structured.value: ChatStructuredApproach(DefaultConfig.SQL_CONNECTION_STRING, logger)                        
+    ApproachType.structured.value: ChatStructuredApproach(DefaultConfig.SQL_CONNECTION_STRING, logger),  
+    ApproachType.telemetry.value: ChatTelemetryApproach(DefaultConfig.KUSTO_CLUSTER_NAME, DefaultConfig.KUSTO_DATABASE_NAME, DefaultConfig.KUSTO_AUTHORITY_ID, DefaultConfig.KUSTO_APPLICATION_ID, DefaultConfig.KUSTO_APPLICATION_KEY, DefaultConfig.KUSTO_TENANT_ID, logger)                    
 }
 
 
@@ -155,7 +157,7 @@ def chat():
             prohibited_resource = access_manager.map_approach_to_resource(approach_type)
             raise Exception(f"This query requires access to {prohibited_resource}\nUser: {user_profile.user_name} is not allowed to use this resource, please try another query or contact your administrator.")
         
-        question_classification = DialogClassification.unstructured_query if approach_type == ApproachType.unstructured else DialogClassification.structured_query
+        question_classification = DialogClassification.unstructured_query if approach_type == ApproachType.unstructured else DialogClassification.telemetry_query
 
         #filtered_chat_session = data_client.filter_chat_session(chat_session, filter=question_classification)
         filtered_chat_session = chat_session

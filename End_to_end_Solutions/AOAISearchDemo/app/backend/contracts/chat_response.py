@@ -2,9 +2,11 @@ from enum import Enum
 from typing import List, Optional
 
 class ApproachType(Enum):
+    telemetry = "telemetry"
     structured = "structured"
     unstructured = "unstructured"
     chit_chat = "chit_chat"
+
     
 class Answer:
     def __init__(self, formatted_answer: str = "", query_generation_prompt: Optional[str] = None, query: Optional[str] = None, query_result: Optional[str] = None):

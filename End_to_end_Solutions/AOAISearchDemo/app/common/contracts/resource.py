@@ -6,6 +6,7 @@ from common.utilities.property_item_reader import read_item_property_with_type, 
 class ResourceTypes(Enum):
     COGNITIVE_SEARCH = "COGNITIVE_SEARCH"
     SQL_DB = "SQL_DB"
+    KQL_DB = "KQL_DB"
 
 class ResourceProfile:
     def __init__(self, resource_id: str, resource_type: ResourceTypes):

@@ -9,6 +9,7 @@ access_rules:
     resources:
     - resource_id: "3c2e5577-55d6-4d98-bfc3-2dc6be17e0bc"
     - resource_id: "66b6899c-2bff-4892-b3d0-56488859d76d"
+    - resource_id: "66b6899c-2bff-4892-b3d0-56488859dkql"
     members: 
       - id: "0ec8ebf5-620f-42ae-bb52-6f09f89cba09"
         member_type: "group"

@@ -90,6 +90,15 @@ class DefaultConfig:
                 cls.DATA_SERVICE_URI = config_reader.read_config_value("DATA-SERVICE-URI")
 
                 cls.SQL_CONNECTION_STRING = config_reader.read_config_value("SQL-CONNECTION-STRING")
+                
+                #todo: aggiungere i valori corretti su key vault 
+                cls.KUSTO_CLUSTER_NAME = config_reader.read_config_value("KUSTO-CLUSTER-NAME")
+                cls.KUSTO_DATABASE_NAME = config_reader.read_config_value("KUSTO-DATABASE-NAME")
+                # cls.KUSTO_AUTHORITY_ID = ""
+                cls.KUSTO_AUTHORITY_ID = config_reader.read_config_value("KUSTO-AUTHORITY-ID")
+                cls.KUSTO_APPLICATION_ID = config_reader.read_config_value("KUSTO-APPLICATION-ID")
+                cls.KUSTO_APPLICATION_KEY = config_reader.read_config_value("KUSTO-APPLICATION-KEY")
+                cls.KUSTO_TENANT_ID = config_reader.read_config_value("KUSTO-TENANT-ID")
 
                 cls.RATIO_OF_INDEX_TO_HISTORY = int(os.getenv("RATIO_OF_INDEX_TO_HISTORY", 5)) if os.getenv("RATIO_OF_INDEX_TO_HISTORY") != "" else 5
                 cls.SEARCH_THRESHOLD_PERCENTAGE = int(os.getenv("SEARCH_THRESHOLD_PERCENTAGE", 50)) if os.getenv("SEARCH_THRESHOLD_PERCENTAGE") != "" else 50

@@ -1,5 +1,6 @@
 export const enum ApproachType {
     Structured = "structured",
+    Telemetry = "telemetry",
     Unstructured = "unstructured",
     ChitChat = "chit_chat"
 }
