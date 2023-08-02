@@ -6,3 +6,4 @@ python-dotenv
 tenacity
 opencensus
 opencensus-ext-azure
+azure.kusto.data

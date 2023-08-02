@@ -12,3 +12,4 @@ opencensus-ext-azure == 1.1.9
 opencensus == 0.11.2
 pandas
 tiktoken==0.4.0
+azure.kusto.data

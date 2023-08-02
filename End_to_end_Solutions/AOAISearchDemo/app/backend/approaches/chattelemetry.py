@@ -19,7 +19,7 @@ class ChatTelemetryApproach(Approach):
     def __init__(self, cluster_name: str, database_name: str, kusto_authority_id:str, kusto_application_id:str, kusto_application_key:str, kusto_tenant_id:str, logger: CustomLogger):
         self.cluster_name = cluster_name
         self.database_name = database_name
-        self.kusto_uri = "https://" + cluster_name + ".kusto.windows.net"
+        self.kusto_uri = "https://" + cluster_name + ".eastus.kusto.windows.net"
         self.kusto_authority_id = kusto_authority_id  # Required for Azure AD authentication
         self.kcsb = KustoConnectionStringBuilder.with_aad_application_key_authentication(self.kusto_uri, kusto_application_id, kusto_application_key, kusto_authority_id)
         self.logger = logger
@@ -83,7 +83,7 @@ class ChatTelemetryApproach(Approach):
             if bot_config["telemetry_final_answer_generation"]["history"]["include"]:
                 message_list.extend(generate_history_messages(history[:-1], bot_config["telemetry_final_answer_generation"]["history"]))
             
-            message_list.append({"role": "user", "content": "Question: " + history[-1]['utterance'] + "\nAnswer:\n" + kql_result})
+            message_list.append({"role": "user", "content": "Question: " + str(history[-1]['utterance']) + "\nAnswer:\n" + str(kql_result)})
 
             kql_result_to_nl_response = openai.ChatCompletion.create(
                 messages=message_list,
