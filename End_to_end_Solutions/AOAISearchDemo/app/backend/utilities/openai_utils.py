@@ -24,7 +24,7 @@ def generate_history_messages(history, config):
         
         for key in message_values:
             if message_values[key] is not None:
-                formatted_message = formatted_message.replace("{" + key + "}", message_values[key])
+                formatted_message = formatted_message.replace("{" + key + "}", str(message_values[key]))
         
         formatted_messages.append({"role": role, "content": formatted_message})
 

@@ -103,7 +103,8 @@ class ChatTelemetryApproach(Approach):
         try:
             client = KustoClient(kcsb)
             response = client.execute(database, query)
-            return dataframe_from_result_table(response.primary_results[0])
+            res = dataframe_from_result_table(response.primary_results[0])
+            return res.to_dict(orient='records')
         except KustoServiceError as ex:
             print("Error executing Kusto query:", ex)
             return None

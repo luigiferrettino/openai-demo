@@ -177,7 +177,7 @@ def chat():
         if (not response.error):
             data_client.add_dialog_to_chat_session(user_id, conversation_id, ParticipantType.user, datetime.datetime.now(), user_message, question_classification)
             logger.info(f"added dialog to chat session for user {user_id} and session {conversation_id}", extra=properties)
-            data_client.add_dialog_to_chat_session(user_id, conversation_id, ParticipantType.assistant, datetime.datetime.now(), json.dumps(response.answer.to_item()), question_classification)
+            data_client.add_dialog_to_chat_session(user_id, conversation_id, ParticipantType.assistant, datetime.datetime.now(), json.dumps(response.answer.to_item(), indent=4, sort_keys=True, default=str), question_classification)
             logger.info(f'added response {response.answer.formatted_answer} to chat session for user {user_id} and session {conversation_id}', extra=properties)
 
         return jsonify(response.to_item())
