@@ -4,6 +4,9 @@ from backend.config import DefaultConfig
 from backend.contracts.chat_response import ApproachType
 from common.logging.log_helper import CustomLogger
 from typing import List
+import re
+import pandas as pd
+from textwrap import dedent
 
 class ApproachClassifier(Approach):
     def __init__(self, logger: CustomLogger):
@@ -14,8 +17,20 @@ class ApproachClassifier(Approach):
         #     prompt=history[-1]['utterance'] + ' ->',
         #     **bot_config["approach_classifier"]["openai_settings"]
         #     )
+        message_list = [{
+                "role": "system",
+                "content": dedent(bot_config["approach_classifier_prompt"]["system_prompt"])
+                 }
+            ]
+        
+        message_list.append({"role": "user", "content": history[-1]['utterance'] + ' ->'})
 
-        q :str = "1" # response['choices'][0]['text'].strip()
+        approach_response = openai.ChatCompletion.create(
+            messages=message_list,
+            **bot_config["approach_classifier_prompt"]["openai_settings"]
+        )
+        q :str = approach_response['choices'][0]['message']['content']
+        #q :str = "1" # response['choices'][0]['text'].strip()
         # self.log_aoai_response_details(f'Classification Prompt:{history[-1]["utterance"]}', f'Response: {q}', response)
 
         if q == "1":

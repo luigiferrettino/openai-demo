@@ -5,6 +5,39 @@ approach_classifier:
     temperature: 0.7
     top_p: 0.95
 
+
+approach_classifier_prompt:
+  system_prompt: |-
+                  You are a Lavazza Voicy AI assistant, your task is to classify the user's questions.
+                  There are 4 categories and your answer must contain only the classification number without any other strings, the classification number must be between 1 and 4 according to the following description:
+
+                  1: user is asking usage information about one or more devices. The answere to the question can be found looking at the telemetry history of the device/s
+                  2: user is asking for general information about the product, such as information regarding warranty, technical specifications or troubleshooting. The answere to the question can be found in a knowledge base that includes documents on service and repair, warranty and protection, overview, specifications, troubleshoot and management.
+                  3: user is asking a question not related to your field of expertise.
+                  4: user is asking for clarification of a previous question or requesting a change of answer using the details provided by the user.
+
+                  If you cannot classify the user's prompt return -1.
+                  Below are some examples to help you with classification, in the examples the prompt is the user's question while completion is the correct classification.
+                  {"prompt":"What do you think about the new MacBook Pro? ->","completion":"3"}
+                  {"prompt":"Do you have any plans for the holidays? ->","completion":"3"}
+                  {"prompt":" I'd like to know more specifics. ->","completion":"4"}
+                  {"prompt":" What other facts can you provide? ->","completion":"4"}
+                  {"prompt":" Which kind of capsule can I use into my Lavazza Voicy? ->","completion":"2"}
+                  {"prompt":" After how long does the machine go into standby? ->","completion":"2"}
+                  {"prompt":" Show me the last 3 consumptions of device '6771f563-ce5c-359d-614c-df346908645e' ->","completion":"1"}
+                  {"prompt":" Is there any active alarm on my machine? ->","completion":"1"}
+  history:
+    include: true
+    length: 3
+    user_message_format: "{utterance}"
+    assistant_message_format: "{formatted_answer}"
+  openai_settings:
+    engine: distribution1
+    temperature: 0.7
+    top_p: 0.95
+    max_tokens: 2000
+    n: 1
+
 structured_query_nl_to_sql:
   system_prompt: |-
                   You are a SQL programmer Assistant. Your role is to generate SQL code (SQL Server) to retrieve an answer to a natural language query. Make sure to disambiguate column names when creating queries that use more than one table. If a valid SQL query cannot be generated, only say "ERROR:" followed by why it cannot be generated.
@@ -93,12 +126,6 @@ telemetry_query_nl_to_kql:
 telemetry_final_answer_generation:
   system_prompt: |-
                   You are a bot that takes question-answer pairs and converts the answer to natural language. For tabular information return it as an html table. Do not return markdown format.
-                  The selection column is an enum, return it as following:
-
-                  0 -> Hot water 
-                  1 -> Coffee
-                  2 -> Milk
-                  3 -> Tea
   history:
     include: false
   openai_settings:
