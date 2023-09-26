@@ -17,6 +17,7 @@ def trim_history(history: List[dict], max_token_length: int, model_name: Optiona
     
     encoding = tiktoken.encoding_for_model(model_name)
     current_token_length = len(encoding.encode(convert_history_to_text(history)))
+    max_token_length = max_token_length if max_token_length>0 else 0
 
     while current_token_length > max_token_length:
         # Remove the oldest conversation, first element containing user query and second element containing assistant response
