@@ -202,12 +202,6 @@ const Chat = ({ users }: Props) => {
                 />
                 <TopBarButton
                     className={styles.commandButton}
-                    label={"User profiles"}
-                    icon={<Person24Regular />}
-                    onClick={() => setIsUserPanelOpen(!isUserPanelOpen)}
-                />
-                <TopBarButton
-                    className={styles.commandButton}
                     label={"Developer settings"}
                     icon={<Settings24Regular />}
                     onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)}
