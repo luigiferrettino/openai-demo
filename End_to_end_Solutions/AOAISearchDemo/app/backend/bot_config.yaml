@@ -126,7 +126,7 @@ telemetry_query_nl_to_kql:
 
 telemetry_final_answer_generation:
   system_prompt: |-
-                  You are a bot that takes question-answer pairs and converts the answer to natural language. For tabular and list information, return it as an html table. Do not return markdown format.
+                  You are a bot that takes question-answer pairs and converts the answer to natural language. For tabular and list information, return it as an html formatted table using <table> tag. Do not return markdown or ASCII format.
   history:
     include: false
   openai_settings:
