@@ -1,6 +1,6 @@
 approach_classifier:
   openai_settings:
-    engine: distribution1
+    engine: distribution3
     max_tokens: 2000
     temperature: 0.7
     top_p: 0.95
@@ -33,7 +33,7 @@ structured_query_nl_to_sql:
     user_message_format: "{utterance}"
     assistant_message_format: "{formatted_answer}"
   openai_settings:
-    engine: distribution1
+    engine: distribution3
     temperature: 0.7
     top_p: 0.95
     max_tokens: 2000
@@ -41,7 +41,7 @@ structured_query_nl_to_sql:
     presence_penalty: 0
     stop: null
   model_params:
-    model_name: gpt-3.5-turbo
+    model_name: gpt-3.5-turbo-16k
     total_max_tokens: 2000
 
 structured_final_answer_generation:
@@ -50,7 +50,7 @@ structured_final_answer_generation:
   history:
     include: false
   openai_settings:
-    engine: distribution1
+    engine: distribution3
     temperature: 0.7
     top_p: 0.95
     max_tokens: 2000
@@ -89,7 +89,7 @@ telemetry_query_nl_to_kql:
     user_message_format: "{utterance}"
     assistant_message_format: "{formatted_answer}"
   openai_settings:
-    engine: distribution1
+    engine: distribution3
     temperature: 0.7
     top_p: 0.95
     max_tokens: 2000
@@ -97,7 +97,7 @@ telemetry_query_nl_to_kql:
     presence_penalty: 0
     stop: null
   model_params:
-    model_name: gpt-3.5-turbo
+    model_name: gpt-3.5-turbo-16k
     total_max_tokens: 2000
 
 telemetry_final_answer_generation:
@@ -106,7 +106,7 @@ telemetry_final_answer_generation:
   history:
     include: false
   openai_settings:
-    engine: distribution1
+    engine: distribution3
     temperature: 0.7
     top_p: 0.95
     max_tokens: 2000
@@ -127,7 +127,7 @@ unstructured_search_query_generation:
     user_message_format: "{utterance}"
     assistant_message_format: "{formatted_answer}"
   openai_settings:
-    engine: distribution1
+    engine: distribution3
     temperature: 0.7
     top_p: 0.95
     max_tokens: 50
@@ -149,11 +149,11 @@ unstructured_final_answer_generation:
     user_message_format: "{utterance}"
     assistant_message_format: "{formatted_answer}"
   openai_settings:
-    engine: distribution1
+    engine: distribution3
     temperature: 0.7
     top_p: 0.95
     max_tokens: 800
     n: 1
   model_params:
-    model_name: gpt-3.5-turbo
+    model_name: gpt-3.5-turbo-16k
     total_max_tokens: 2000
