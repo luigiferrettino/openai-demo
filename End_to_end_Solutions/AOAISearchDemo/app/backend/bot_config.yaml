@@ -1,6 +1,6 @@
 approach_classifier:
   openai_settings:
-    engine: distribution3
+    engine: lavazza-poc-gpt4-32k
     max_tokens: 2000
     temperature: 0.7
     top_p: 0.95
@@ -33,8 +33,8 @@ approach_classifier_prompt:
     user_message_format: "{utterance}"
     assistant_message_format: "{formatted_answer}"
   openai_settings:
-    engine: distribution3
-    temperature: 0.7
+    engine: lavazza-poc-gpt4-32k
+    temperature: 0.5
     top_p: 0.95
     max_tokens: 2000
     n: 1
@@ -67,7 +67,7 @@ structured_query_nl_to_sql:
     user_message_format: "{utterance}"
     assistant_message_format: "{formatted_answer}"
   openai_settings:
-    engine: distribution3
+    engine: lavazza-poc-gpt4-32k
     temperature: 0.7
     top_p: 0.95
     max_tokens: 1000
@@ -75,7 +75,7 @@ structured_query_nl_to_sql:
     presence_penalty: 0
     stop: null
   model_params:
-    model_name: gpt-3.5-turbo-16k
+    model_name: gpt-4-32k
     total_max_tokens: 10000
 
 structured_final_answer_generation:
@@ -84,7 +84,7 @@ structured_final_answer_generation:
   history:
     include: false
   openai_settings:
-    engine: distribution3
+    engine: lavazza-poc-gpt4-32k
     temperature: 0.7
     top_p: 0.95
     max_tokens: 2000
@@ -98,10 +98,10 @@ telemetry_query_nl_to_kql:
                   Do not answer any questions on inserting or deleting rows from the table. Instead, say "ERROR: I am not authorized to make changes to the data". Make sure to return queries without comments or carriage return. The queries you generate must always result in tables, never in graphs
 
                   Use the following telemetry database schema to write kusto queries:
-                  consumptions:{"Name":"consumption","OrderedColumns":[{"Name":"region","Type":"System.String","CslType":"string"},{"Name":"msgId","Type":"System.Guid","CslType":"guid"},{"Name":"correlationId","Type":"System.String","CslType":"string"},{"Name":"_ts","Type":"System.DateTime","CslType":"datetime"},{"Name":"selection","Type":"System.Int64","CslType":"long"},{"Name":"product","Type":"System.Int64","CslType":"long"},{"Name":"result","Type":"System.Int64","CslType":"long"},{"Name":"firstBarcode","Type":"System.String","CslType":"string"},{"Name":"secondBarcode","Type":"System.String","CslType":"string"},{"Name":"dose","Type":"System.Int64","CslType":"long"},{"Name":"brewedType","Type":"System.Int64","CslType":"long"},{"Name":"waterType","Type":"System.Int64","CslType":"long"},{"Name":"originalDate","Type":"System.DateTime","CslType":"datetime"},{"Name":"date","Type":"System.DateTime","CslType":"datetime"},{"Name":"duration","Type":"System.Int64","CslType":"long"},{"Name":"ventId","Type":"System.Int64","CslType":"long"},{"Name":"deviceID","Type":"System.Guid","CslType":"guid"}]}
+                  consumption:{"Name":"consumption","OrderedColumns":[{"Name":"region","Type":"System.String","CslType":"string"},{"Name":"msgId","Type":"System.Guid","CslType":"guid"},{"Name":"correlationId","Type":"System.String","CslType":"string"},{"Name":"_ts","Type":"System.DateTime","CslType":"datetime"},{"Name":"selection","Type":"System.Int64","CslType":"long"},{"Name":"product","Type":"System.Int64","CslType":"long"},{"Name":"result","Type":"System.Int64","CslType":"long"},{"Name":"firstBarcode","Type":"System.String","CslType":"string"},{"Name":"secondBarcode","Type":"System.String","CslType":"string"},{"Name":"dose","Type":"System.Int64","CslType":"long"},{"Name":"brewedType","Type":"System.Int64","CslType":"long"},{"Name":"waterType","Type":"System.Int64","CslType":"long"},{"Name":"originalDate","Type":"System.DateTime","CslType":"datetime"},{"Name":"date","Type":"System.DateTime","CslType":"datetime"},{"Name":"duration","Type":"System.Int64","CslType":"long"},{"Name":"ventId","Type":"System.Int64","CslType":"long"},{"Name":"deviceID","Type":"System.Guid","CslType":"guid"}]}
                   faults2: {"Name":"faults2","OrderedColumns":[{"Name":"region","Type":"System.String","CslType":"string"},{"Name":"msgId","Type":"System.Guid","CslType":"guid"},{"Name":"correlationId","Type":"System.String","CslType":"string"},{"Name":"date","Type":"System.DateTime","CslType":"datetime"},{"Name":"_ts","Type":"System.DateTime","CslType":"datetime"},{"Name":"tempError","Type":"System.SByte","CslType":"bool"},{"Name":"heaterTimeoutError","Type":"System.SByte","CslType":"bool"},{"Name":"initError","Type":"System.SByte","CslType":"bool"},{"Name":"scannerError","Type":"System.SByte","CslType":"bool"},{"Name":"error04","Type":"System.SByte","CslType":"bool"},{"Name":"ntcOpenError","Type":"System.SByte","CslType":"bool"},{"Name":"ntcShortError","Type":"System.SByte","CslType":"bool"},{"Name":"pcbaError","Type":"System.SByte","CslType":"bool"},{"Name":"injUpStuck","Type":"System.SByte","CslType":"bool"},{"Name":"injDownStuck","Type":"System.SByte","CslType":"bool"},{"Name":"dvrValveMtrStuck","Type":"System.SByte","CslType":"bool"},{"Name":"flowMeterTimeout","Type":"System.SByte","CslType":"bool"},{"Name":"checkWaterConnection","Type":"System.SByte","CslType":"bool"},{"Name":"error13","Type":"System.SByte","CslType":"bool"},{"Name":"error14","Type":"System.SByte","CslType":"bool"},{"Name":"error15","Type":"System.SByte","CslType":"bool"},{"Name":"chillerStatus","Type":"System.Int32","CslType":"int"},{"Name":"waterEmpty","Type":"System.SByte","CslType":"bool"},{"Name":"descalingNeeded","Type":"System.SByte","CslType":"bool"},{"Name":"closeDoor","Type":"System.SByte","CslType":"bool"},{"Name":"isMBSleeping","Type":"System.SByte","CslType":"bool"},{"Name":"deviceID","Type":"System.Guid","CslType":"guid"}]} 
                   
-                  Please return only a string with the query, do not add any other message to the response.
+                  Only return a non-quoted string with the query, do not add any other message to the response.
 
                   When you write column names wrap them in [''] brakets as kusto language accepts. Use always the column ['date'] for filtering and ordering time.
 
@@ -113,15 +113,16 @@ telemetry_query_nl_to_kql:
     user_message_format: "{utterance}"
     assistant_message_format: "{formatted_answer}"
   openai_settings:
-    engine: distribution3
-    temperature: 0.7
+    engine: lavazza-poc-gpt4-32k
+    temperature: 0
     top_p: 0.95
     max_tokens: 1000
     frequency_penalty: 0
+    temperature: 0
     presence_penalty: 0
     stop: null
   model_params:
-    model_name: gpt-3.5-turbo-16k
+    model_name: gpt-4-32k
     total_max_tokens: 10000
 
 telemetry_final_answer_generation:
@@ -130,7 +131,7 @@ telemetry_final_answer_generation:
   history:
     include: false
   openai_settings:
-    engine: distribution3
+    engine: lavazza-poc-gpt4-32k
     temperature: 0.7
     top_p: 0.95
     max_tokens: 2000
@@ -151,8 +152,8 @@ unstructured_search_query_generation:
     user_message_format: "{utterance}"
     assistant_message_format: "{formatted_answer}"
   openai_settings:
-    engine: distribution3
-    temperature: 0.7
+    engine: lavazza-poc-gpt4-32k
+    temperature: 0.5
     top_p: 0.95
     max_tokens: 50
     n: 1
@@ -173,11 +174,11 @@ unstructured_final_answer_generation:
     user_message_format: "{utterance}"
     assistant_message_format: "{formatted_answer}"
   openai_settings:
-    engine: distribution3
+    engine: lavazza-poc-gpt4-32k
     temperature: 0.7
     top_p: 0.95
     max_tokens: 1000
     n: 1
   model_params:
-    model_name: gpt-3.5-turbo-16k
+    model_name: gpt-4-32k
     total_max_tokens: 10000
