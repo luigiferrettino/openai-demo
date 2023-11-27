@@ -25,7 +25,7 @@ class ChatTelemetryApproach(Approach):
         self.logger = logger
 
 
-    def run(self, history, bot_config, overrides: dict) -> any:        
+    def run(self, history, bot_config, overrides: dict, context: dict) -> any:        
         unauthorized_error_messages = ["I am not authorized to make changes to the data"]
 
         # STEP 1: Generate an kql query using the chat history
@@ -41,8 +41,12 @@ class ChatTelemetryApproach(Approach):
                                         bot_config["telemetry_query_nl_to_kql"]["model_params"]["total_max_tokens"] - compute_tokens(bot_config["telemetry_query_nl_to_kql"]["system_prompt"]) - bot_config["telemetry_query_nl_to_kql"]["openai_settings"]["max_tokens"],
                                         bot_config["telemetry_query_nl_to_kql"]["model_params"]["model_name"])
             message_list.extend(chat_history)
-        
-        message_list.append({"role": "user", "content": history[-1]['utterance'] + " kql Code: "})
+            
+        contextString = ""
+        if context:
+            json.dumps(context)
+            contextString += 'Context: '+json.dumps(context)
+        message_list.append({"role": "user", "content": contextString  + ' | User question: ' + history[-1]['utterance'] + " kql Code: "})
 
         nl_to_kql_response = openai.ChatCompletion.create(
             messages=message_list,

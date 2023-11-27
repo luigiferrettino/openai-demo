@@ -85,6 +85,11 @@ const Chat = ({ users }: Props) => {
                     semanticCaptions: useSemanticCaptions,
                     suggestFollowupQuestions: useSuggestFollowupQuestions,
                     classificationOverride
+                },
+                context: {
+                    siteSourceId: "s22",
+                    deviceId: "RPLY001LAB-----01:TON25001",
+                    siteType: "food"
                 }
             };
             const result = await chatApi(request);

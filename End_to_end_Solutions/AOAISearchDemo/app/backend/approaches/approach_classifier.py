@@ -17,20 +17,20 @@ class ApproachClassifier(Approach):
         #     prompt=history[-1]['utterance'] + ' ->',
         #     **bot_config["approach_classifier"]["openai_settings"]
         #     )
-        message_list = [{
-                "role": "system",
-                "content": dedent(bot_config["approach_classifier_prompt"]["system_prompt"])
-                 }
-            ]
-        
-        message_list.append({"role": "user", "content": history[-1]['utterance'] + ' ->'})
+        #message_list = [{
+        #        "role": "system",
+        #        "content": dedent(bot_config["approach_classifier_prompt"]["system_prompt"])
+        #         }
+        #    ]
+        #
+        #message_list.append({"role": "user", "content": history[-1]['utterance'] + ' ->'})
 
-        approach_response = openai.ChatCompletion.create(
-            messages=message_list,
-            **bot_config["approach_classifier_prompt"]["openai_settings"]
-        )
-        q :str = approach_response['choices'][0]['message']['content']
-        #q :str = "1" # response['choices'][0]['text'].strip()
+        #approach_response = openai.ChatCompletion.create(
+        #    messages=message_list,
+        #    **bot_config["approach_classifier_prompt"]["openai_settings"]
+        #)
+        #q :str = approach_response['choices'][0]['message']['content']
+        q :str = "1" # response['choices'][0]['text'].strip()
         # self.log_aoai_response_details(f'Classification Prompt:{history[-1]["utterance"]}', f'Response: {q}', response)
 
         if q == "1":

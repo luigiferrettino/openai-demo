@@ -15,6 +15,12 @@ export type ChatRequestOverrides = {
     classificationOverride?: ApproachType;
 };
 
+export type ChatRequestContext = {
+    siteSourceId: string;
+    deviceId: string;
+    siteType: string;
+};
+
 interface DialogRequest {
     userID: string;
     conversationID: string;
@@ -24,6 +30,7 @@ interface DialogRequest {
 export interface ChatRequest extends DialogRequest {
     dialog: string;
     overrides?: ChatRequestOverrides;
+    context?: ChatRequestContext;
 }
 
 export type Answer = {

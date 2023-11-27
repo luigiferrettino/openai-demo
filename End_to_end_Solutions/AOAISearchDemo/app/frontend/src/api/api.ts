@@ -29,7 +29,8 @@ export async function chatApi(options: ChatRequest): Promise<ChatResponse> {
                 exclude_category: options.overrides?.excludeCategory,
                 suggest_followup_questions: options.overrides?.suggestFollowupQuestions,
                 classification_override: options.overrides?.classificationOverride
-            }
+            },
+            context: options.context
         })
     });
 

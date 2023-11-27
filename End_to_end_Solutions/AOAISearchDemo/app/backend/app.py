@@ -82,6 +82,7 @@ def content_file(path):
 
 @app.route("/chat", methods=["POST"])
 def chat():
+    body = request.json
     # try get conversation_id and dialog_id needed for logging
     conversation_id = request.json.get("conversation_id","no conversation_id found in request")
     dialog_id = request.json.get("dialog_id", "no dialog_id found in request")
@@ -171,7 +172,7 @@ def chat():
         
         openai.api_base = f"https://{DefaultConfig.AZURE_OPENAI_GPT4_SERVICE}.openai.azure.com"
         openai.api_key = DefaultConfig.AZURE_OPENAI_GPT4_API_KEY
-        response = impl.run(simplified_history, bot_config, request.json.get("overrides") or {})
+        response = impl.run(simplified_history, bot_config, request.json.get("overrides") or {}, request.json.get("context") or {})
 
         # state store update
         if (not response.error):
