@@ -138,7 +138,7 @@ def chat():
         logger.info(f"question_type: {approach_type.value}", extra=properties)
 
         if approach_type == ApproachType.chit_chat:
-            chit_chat_canned_response =  "I'm sorry, but the question you've asked is outside my area of expertise. I'd be happy to help with any questions related to Lavazza Voicy. Please feel free to ask about those, and I'll do my best to assist you!"
+            chit_chat_canned_response =  "I'm sorry, but the question you've asked is outside my area of expertise. I'd be happy to help with any questions related to Contoso Machine. Please feel free to ask about those, and I'll do my best to assist you!"
             data_client.add_dialog_to_chat_session(user_id, conversation_id, ParticipantType.user, datetime.datetime.now(), user_message, DialogClassification.chit_chat)
             logger.info(f"added dialog to chat session for user {user_id} and session {conversation_id}", extra=properties)
             

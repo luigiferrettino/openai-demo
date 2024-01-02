@@ -63,9 +63,9 @@ class ChatTelemetryApproach(Approach):
             if m:
                 raise OutOfScopeException(message=m.group(1), suggested_classification=ApproachType.unstructured)
 
-        answer.query = generated_kql_query
+        answer.query = generated_kql_query.strip('"')
         try:
-            kql_result = self.execute_kusto_query(self.kcsb, self.database_name, generated_kql_query)
+            kql_result = self.execute_kusto_query(self.kcsb, self.database_name, generated_kql_query.strip('"'))
         except pd.errors.DatabaseError as e:
             raise OutOfScopeException(message=str(e), suggested_classification=ApproachType.unstructured)
         except Exception as e:
