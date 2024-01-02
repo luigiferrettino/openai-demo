@@ -24,6 +24,9 @@ const Chat = ({ users }: Props) => {
     const [useSemanticRanker, setUseSemanticRanker] = useState<boolean>(true);
     const [useSemanticCaptions, setUseSemanticCaptions] = useState<boolean>(false);
     const [excludeCategory, setExcludeCategory] = useState<string>("");
+    const [deviceId, setDeviceId] = useState<string>("RPLY001LAB-----01:TON25001");
+    const [siteSourceId, setSiteId] = useState<string>("s22");
+    const [siteType, setSiteType] = useState<string>("food");
     const [useSuggestFollowupQuestions, setUseSuggestFollowupQuestions] = useState<boolean>(false);
 
     const chatMessageStreamEnd = useRef<HTMLDivElement | null>(null);
@@ -87,9 +90,9 @@ const Chat = ({ users }: Props) => {
                     classificationOverride
                 },
                 context: {
-                    siteSourceId: "s22",
-                    deviceId: "RPLY001LAB-----01:TON25001",
-                    siteType: "food"
+                    siteSourceId: siteSourceId,
+                    deviceId: deviceId,
+                    siteType: siteType
                 }
             };
             const result = await chatApi(request);
@@ -160,6 +163,18 @@ const Chat = ({ users }: Props) => {
         setExcludeCategory(newValue || "");
     };
 
+    const onDeviceIdChanged = (_ev?: React.FormEvent, newValue?: string) => {
+        setDeviceId(newValue || "");
+    };
+
+    const onSiteIdChanged = (_ev?: React.FormEvent, newValue?: string) => {
+        setSiteId(newValue || "");
+    };
+
+    const onSiteTypeChanged = (_ev?: React.FormEvent, newValue?: string) => {
+        setSiteType(newValue || "");
+    };
+
     const onUseSuggestFollowupQuestionsChange = (_ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean) => {
         setUseSuggestFollowupQuestions(!!checked);
     };
@@ -207,7 +222,7 @@ const Chat = ({ users }: Props) => {
                 />
                 <TopBarButton
                     className={styles.commandButton}
-                    label={"Developer settings"}
+                    label={"Context"}
                     icon={<Settings24Regular />}
                     onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)}
                 />
@@ -311,7 +326,7 @@ const Chat = ({ users }: Props) => {
                     <Label className={styles.chatSettingsSeparator}>{selectedUser?.description}</Label>
                 </Panel>
                 <Panel
-                    headerText="Configure answer generation"
+                    headerText="Context data"
                     isOpen={isConfigPanelOpen}
                     isBlocking={false}
                     onDismiss={() => setIsConfigPanelOpen(false)}
@@ -319,16 +334,18 @@ const Chat = ({ users }: Props) => {
                     onRenderFooterContent={() => <DefaultButton onClick={() => setIsConfigPanelOpen(false)}>Close</DefaultButton>}
                     isFooterAtBottom={true}
                 >
-                    <SpinButton
+                    {/* <SpinButton
                         className={styles.chatSettingsSeparator}
                         label="Retrieve this many documents from search:"
                         min={1}
                         max={50}
                         defaultValue={retrieveCount.toString()}
                         onChange={onRetrieveCountChange}
-                    />
-                    <TextField className={styles.chatSettingsSeparator} label="Exclude category" onChange={onExcludeCategoryChanged} />
-                    <Checkbox
+                    /> */}
+                    <TextField className={styles.chatSettingsSeparator} label="Device Id" onChange={onDeviceIdChanged} defaultValue={deviceId} />
+                    <TextField className={styles.chatSettingsSeparator} label="Site Id" onChange={onSiteIdChanged} defaultValue={siteSourceId} />
+                    <TextField className={styles.chatSettingsSeparator} label="Site Type" onChange={onSiteTypeChanged} defaultValue={siteType} />
+                    {/* <Checkbox
                         className={styles.chatSettingsSeparator}
                         checked={useSemanticRanker}
                         label="Use semantic ranker for retrieval"
@@ -340,7 +357,7 @@ const Chat = ({ users }: Props) => {
                         label="Use query-contextual summaries instead of whole documents"
                         onChange={onUseSemanticCaptionsChange}
                         disabled={!useSemanticRanker}
-                    />
+                    /> */}
                     {/* <Checkbox
                         className={styles.chatSettingsSeparator}
                         checked={useSuggestFollowupQuestions}

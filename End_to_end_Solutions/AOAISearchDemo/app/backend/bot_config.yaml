@@ -8,7 +8,7 @@ approach_classifier:
 
 approach_classifier_prompt:
   system_prompt: |-
-                  You are a Lavazza Voicy AI assistant, your task is to classify the user's questions.
+                  You are a Contoso Machine AI assistant, your task is to classify the user's questions.
                   There are 4 categories and your answer must contain only the classification number without any other strings, the classification number must be between 1 and 4 according to the following description:
 
                   1: user is asking usage information about one or more devices. The answere to the question can be found looking at the telemetry history of the device/s
@@ -23,7 +23,7 @@ approach_classifier_prompt:
                   {"prompt":" I'd like to know more specifics. ->","completion":"4"}
                   {"prompt":" What other facts can you provide? ->","completion":"4"}
                   {"prompt":" Sort the previous result by increasing duration ->","completion":"4"}
-                  {"prompt":" Which kind of capsule can I use into my Lavazza Voicy? ->","completion":"2"}
+                  {"prompt":" Which kind of capsule can I use into my Contoso Machine? ->","completion":"2"}
                   {"prompt":" After how long does the machine go into standby? ->","completion":"2"}
                   {"prompt":" Show me the last 3 consumptions of device '6771f563-ce5c-359d-614c-df346908645e' ->","completion":"1"}
                   {"prompt":" Is there any active alarm on my machine? ->","completion":"1"}
@@ -34,7 +34,7 @@ approach_classifier_prompt:
     assistant_message_format: "{formatted_answer}"
   openai_settings:
     engine: distribution3
-    temperature: 0
+    temperature: 0.5
     top_p: 0.95
     max_tokens: 2000
     n: 1
@@ -70,7 +70,7 @@ structured_query_nl_to_sql:
     engine: distribution3
     temperature: 0.7
     top_p: 0.95
-    max_tokens: 2000
+    max_tokens: 1000
     frequency_penalty: 0
     presence_penalty: 0
     stop: null
@@ -107,6 +107,7 @@ telemetry_query_nl_to_kql:
                   iot_alerts: {"Name":"iot_alerts","OrderedColumns":[{"Name":"alertId","Type":"System.Guid","CslType":"guid"},{"Name":"region","Type":"System.String","CslType":"string"},{"Name":"deviceId","Type":"System.String","CslType":"string"},{"Name":"telemTs","Type":"System.Int64","CslType":"long"},{"Name":"type","Type":"System.String","CslType":"string"},{"Name":"code","Type":"System.String","CslType":"string"},{"Name":"group","Type":"System.String","CslType":"string"},{"Name":"status","Type":"System.String","CslType":"string"},{"Name":"severity","Type":"System.String","CslType":"string"},{"Name":"alarmTs","Type":"System.Int64","CslType":"long"},{"Name":"_ts","Type":"System.DateTime","CslType":"datetime"},{"Name":"iothubDeviceId","Type":"System.String","CslType":"string"},{"Name":"organizationSourceId","Type":"System.String","CslType":"string"},{"Name":"siteSourceId","Type":"System.String","CslType":"string"},{"Name":"subsiteSourceId","Type":"System.String","CslType":"string"},{"Name":"deviceCloudClass","Type":"System.Int64","CslType":"long"},{"Name":"applianceVariant","Type":"System.String","CslType":"string"},{"Name":"alertNumber","Type":"System.String","CslType":"string"},{"Name":"deviceType","Type":"System.String","CslType":"string"}]}
                   iot_food_cycles: {"Name":"iot_food_cycles","OrderedColumns":[{"Name":"cycleId","Type":"System.Guid","CslType":"guid"},{"Name":"region","Type":"System.String","CslType":"string"},{"Name":"deviceId","Type":"System.String","CslType":"string"},{"Name":"telemTs","Type":"System.Int64","CslType":"long"},{"Name":"startTime","Type":"System.Int64","CslType":"long"},{"Name":"endTime","Type":"System.Int64","CslType":"long"},{"Name":"programName","Type":"System.Object","CslType":"dynamic"},{"Name":"programType","Type":"System.String","CslType":"string"},{"Name":"targetDuration","Type":"System.Int64","CslType":"long"},{"Name":"fscResult","Type":"System.String","CslType":"string"},{"Name":"numberOfPhases","Type":"System.String","CslType":"string"},{"Name":"phases","Type":"System.Object","CslType":"dynamic"},{"Name":"_ts","Type":"System.DateTime","CslType":"datetime"},{"Name":"iothubDeviceId","Type":"System.Guid","CslType":"guid"},{"Name":"tree","Type":"System.Object","CslType":"dynamic"},{"Name":"runningProgramKeyPos","Type":"System.String","CslType":"string"},{"Name":"programID","Type":"System.String","CslType":"string"},{"Name":"cycleType","Type":"System.String","CslType":"string"},{"Name":"cycleResult","Type":"System.String","CslType":"string"},{"Name":"GuideLineSelected","Type":"System.String","CslType":"string"},{"Name":"GuideLineResult","Type":"System.String","CslType":"string"},{"Name":"HACCPResult","Type":"System.String","CslType":"string"},{"Name":"organizationSourceId","Type":"System.String","CslType":"string"},{"Name":"siteSourceId","Type":"System.String","CslType":"string"},{"Name":"subsiteSourceId","Type":"System.String","CslType":"string"},{"Name":"consumedWater","Type":"System.String","CslType":"string"},{"Name":"consumedPower","Type":"System.Int64","CslType":"long"},{"Name":"consumedDetergent","Type":"System.String","CslType":"string"},{"Name":"interrupted","Type":"System.String","CslType":"string"},{"Name":"status","Type":"System.String","CslType":"string"},{"Name":"cloudClass","Type":"System.Int64","CslType":"long"},{"Name":"multiTimer","Type":"System.String","CslType":"string"},{"Name":"washingTempSet","Type":"System.String","CslType":"string"},{"Name":"rinsingTempSet","Type":"System.String","CslType":"string"}]}
 
+                  Column status in iot_alerts indicates if it's an event of alert activation or deactivation, use alertNumber as key to correlate the 2 events.
                   Please, do not add any futile data, only a string with the query.
 
                   Examples:
@@ -124,7 +125,10 @@ telemetry_query_nl_to_kql:
                   Assistant: let lastMonthStart = startofmonth(now(-30d)); let lastMonthEnd = startofmonth(now()); let deviceIdToCheck = "RPLY001LAB-----01:TON25001";  let siteSourceIdToCheck = "s22"; iot_food_cycles | where (isempty(deviceIdToCheck) or deviceId == deviceIdToCheck) and siteSourceId == siteSourceIdToCheck and _ts >= lastMonthStart and _ts < lastMonthEnd | summarize totalPowerConsumption = sum(consumedPower);
                   User: "context": {"siteSourceId": "s22", "deviceId": "RPLY001LAB-----01:TON25001", "siteType": "food"} | User question: how long is the average duration of a cycle in this machine?:
                   Assistant: let lastMonthStart = startofmonth(now(-30d)); let lastMonthEnd = startofmonth(now()); let deviceIdToCheck = "RPLY001LAB-----01:TON25001"; let siteSourceIdToCheck = "s22"; iot_food_cycles | where (isempty(deviceIdToCheck) or deviceId == deviceIdToCheck) and siteSourceId == siteSourceIdToCheck and _ts >= lastMonthStart and _ts < lastMonthEnd and isnotempty(endTime) and isnotempty(startTime) | summarize avgDuration = round(avg(endTime-startTime), 2);
-                  
+                  User: "context": {"siteSourceId": "s22", "deviceId": "RPLY001LAB-----01:TON25001", "siteType": "food"} | User question: Give me the last 3 alerts raised by this machine?:
+                  Assistant: let lastMonthStart = startofmonth(now(-30d)); let lastMonthEnd = startofmonth(now()); let deviceIdToCheck = "RPLY001LAB-----01:TON25001"; let siteSourceIdToCheck = "s22"; iot_alerts | where (isempty(deviceIdToCheck) or deviceId == deviceIdToCheck) and siteSourceId == siteSourceIdToCheck | where status=="true" | order by timestamp desc | take 3;
+                  User: "context": {"siteSourceId": "s22", "deviceId": "RPLY001LAB-----01:TON25001", "siteType": "food"} | User question: Is there any active alert on this machine?:
+                  Assistant: let lastMonthStart = startofmonth(now(-30d)); let lastMonthEnd = startofmonth(now()); let deviceIdToCheck = "RPLY001LAB-----01:TON25001"; let siteSourceIdToCheck = "s22"; iot_alerts | where (isempty(deviceIdToCheck) or deviceId == deviceIdToCheck) and siteSourceId == siteSourceIdToCheck | where status == "true" | join kind=leftanti (iot_alerts | where (isempty(deviceIdToCheck) or deviceId == deviceIdToCheck) and siteSourceId == siteSourceIdToCheck | where status == "false") on $left.alertNumber==$right.alertNumber;
   history:
     include: true
     length: 3
@@ -134,8 +138,9 @@ telemetry_query_nl_to_kql:
     engine: distribution3
     temperature: 0
     top_p: 0.95
-    max_tokens: 2000
+    max_tokens: 1000
     frequency_penalty: 0
+    temperature: 0
     presence_penalty: 0
     stop: null
   model_params:
@@ -144,11 +149,7 @@ telemetry_query_nl_to_kql:
 
 telemetry_final_answer_generation:
   system_prompt: |-
-                  You are bot that takes question-answer pairs and converts the answer to natural language. For tabular information return it as an html table. Do not return markdown format.
-                  For consumption use the following conversion instructions:
-                  -Water consumption is in millilitres, convert to litres when above one litre and show 2 decimal places if values are below 100 litres.
-                  -Energy consumption is in watt-hours, convert to kilowatts when above kilowatts and show 2 decimal places if values are below 100 kilowatts.
-                  -Detergent consumption is in millilitres, convert to litres when above one litre and show 2 decimal places if values are below 100 litres.
+                  You are a bot that takes question-answer pairs and converts the answer to natural language. For tabular and list information, return it as an html formatted table using <table> tag. Do not return markdown or ASCII format.
   history:
     include: false
   openai_settings:
@@ -162,7 +163,7 @@ telemetry_final_answer_generation:
 
 unstructured_search_query_generation:
   system_prompt: |-
-                  Below is a history of the conversation so far, and a new question asked by the user that needs to be answered by searching in a knowledge base about Surface devices that includes documents on service and repair, warranty and protection, overview, specifications, troubleshoot and management.
+                  Below is a history of the conversation so far, and a new question asked by the user that needs to be answered by searching in a knowledge base about Contoso Machine devices that includes documents on service and repair, warranty and protection, overview, specifications, troubleshoot and management.
                   Generate a search query based on the conversation and the new question. 
                   Do not include cited source filenames and document names e.g info.txt or doc.pdf in the search query terms.
                   Do not include any text inside [] or <<>> in the search query terms.
@@ -174,14 +175,14 @@ unstructured_search_query_generation:
     assistant_message_format: "{formatted_answer}"
   openai_settings:
     engine: distribution3
-    temperature: 0.7
+    temperature: 0.5
     top_p: 0.95
     max_tokens: 50
     n: 1
 
 unstructured_final_answer_generation:
   system_prompt: |-
-                Assistant helps the employees with their questions about Surface devices. Assistant ONLY uses facts in the DOCUMENTATION section and information from previous conversations to respond. 
+                Assistant helps the employees with their questions about Contoso Machine. Assistant ONLY uses facts in the DOCUMENTATION section and information from previous conversations to respond. 
                 Assistant will not repeat previously stated sentences or information. If DOCUMENTATION and the conversation history are empty or if the DOCUMENTATION and conversation history are irrelevant to the user's question, then reply with "ERROR:" followed by the reason. 
                 If response needs to be in tabular format, then create tables in HTML format. 
                 Each document has a name followed by colon and the actual content. Always include the source name for each fact used in generating the response. 
@@ -198,7 +199,7 @@ unstructured_final_answer_generation:
     engine: distribution3
     temperature: 0.7
     top_p: 0.95
-    max_tokens: 800
+    max_tokens: 1000
     n: 1
   model_params:
     model_name: gpt-3.5-turbo-16k

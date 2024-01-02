@@ -172,7 +172,10 @@ def chat():
         
         openai.api_base = f"https://{DefaultConfig.AZURE_OPENAI_GPT4_SERVICE}.openai.azure.com"
         openai.api_key = DefaultConfig.AZURE_OPENAI_GPT4_API_KEY
-        response = impl.run(simplified_history, bot_config, request.json.get("overrides") or {}, request.json.get("context") or {})
+        if approach_type==ApproachType.telemetry:
+            response = impl.run(simplified_history, bot_config, request.json.get("overrides") or {}, request.json.get("context") or {})
+        else:
+            response = impl.run(simplified_history, bot_config, request.json.get("overrides") or {})
 
         # state store update
         if (not response.error):
