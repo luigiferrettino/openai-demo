@@ -14,7 +14,7 @@ param backendServiceName string = ''
 param dataServiceName string = ''
 param resourceGroupName string = ''
 
-param searchServiceName string = ''
+param searchServiceName string = 'rg-crmdemo-sserv-us'
 param searchServiceResourceGroupName string = ''
 param searchServiceResourceGroupLocation string = location
 
@@ -374,20 +374,20 @@ module appInsights 'core/logging/appinsights.bicep' = {
 }
 
 // SQL Server and Database Deployment
-module sql 'core/database/sql-database.bicep' = {
-  name: 'sql'
-  scope: sqlResourceGroup
-  params: {
-    sqlServerName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${resourceToken}'
-    sqlDatabaseName: !empty(sqlDatabaseName) ? sqlDatabaseName : '${abbrs.sqlServersDatabases}${resourceToken}'
-    location: location
-    keyVaultName: keyVault.outputs.name
-    addKeysToVault: true
-  }
-  dependsOn: [
-    keyVault
-  ]
-}
+// module sql 'core/database/sql-database.bicep' = {
+//   name: 'sql'
+//   scope: sqlResourceGroup
+//   params: {
+//     sqlServerName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${resourceToken}'
+//     sqlDatabaseName: !empty(sqlDatabaseName) ? sqlDatabaseName : '${abbrs.sqlServersDatabases}${resourceToken}'
+//     location: location
+//     keyVaultName: keyVault.outputs.name
+//     addKeysToVault: true
+//   }
+//   dependsOn: [
+//     keyVault
+//   ]
+// }
 
 // USER ROLES
 module openAiRoleUser 'core/security/role.bicep' = {
@@ -575,19 +575,19 @@ module azureFormRecognizerKey 'core/keyvault/keyvault-secret.bicep' = {
   ]
 }
 
-module azureSQLServerName 'core/keyvault/keyvault-secret.bicep' = {
-  name: 'sqlserver-name'
-  scope: resourceGroup
-  params: {
-    keyVaultName: keyVault.outputs.name
-    secretName: 'SQL-SERVER-NAME'
-    secretValue: sql.outputs.sqlServerName
-  }
-  dependsOn: [
-    keyVault
-    sql
-  ]
-}
+// module azureSQLServerName 'core/keyvault/keyvault-secret.bicep' = {
+//   name: 'sqlserver-name'
+//   scope: resourceGroup
+//   params: {
+//     keyVaultName: keyVault.outputs.name
+//     secretName: 'SQL-SERVER-NAME'
+//     secretValue: sql.outputs.sqlServerName
+//   }
+//   dependsOn: [
+//     keyVault
+//     sql
+//   ]
+// }
 
 module dataServiceUri 'core/keyvault/keyvault-secret.bicep' = {
   name: 'appservice-data-service-uri'

@@ -69,5 +69,5 @@ $venvPythonPath ./scripts/prepopulate/prepopulate.py \
     --cosmos_db_entities_container_name $AZURE_COSMOS_DB_ENTITIES_CONTAINER_NAME \
     --cosmos_db_permissions_container_name $AZURE_COSMOS_DB_PERMISSIONS_CONTAINER_NAME
 
-echo 'Running "populate_sql.py"'
-$venvPythonPath ./scripts/.venv/bin/python ./scripts/prepopulate/populate_sql.py --sql_connection_string $SQL_CONNECTION_STRING
+# echo 'Running "populate_sql.py"'
+# $venvPythonPath ./scripts/.venv/bin/python ./scripts/prepopulate/populate_sql.py --sql_connection_string $SQL_CONNECTION_STRING

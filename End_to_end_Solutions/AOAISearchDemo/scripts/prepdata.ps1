@@ -106,17 +106,17 @@ if ($process.ExitCode -ne 0) {
   Write-Host ""
 }
 
-Write-Host ""
-Write-Host 'Running "populate_sql.py"...'
-Write-Host ""
-$populatesqlArguments = "./scripts/prepopulate/populate_sql.py",
-  "--sqlconnectionstring", "`"$env:SQL_CONNECTION_STRING`"",
-  "--subscriptionid", "$env:AZURE_SUBSCRIPTION_ID",
-  "--resourcegroup", "$env:AZURE_RESOURCE_GROUP",
-  "--servername", "$env:SQL_SERVER_NAME",
-  "-v"
+# Write-Host ""
+# Write-Host 'Running "populate_sql.py"...'
+# Write-Host ""
+# $populatesqlArguments = "./scripts/prepopulate/populate_sql.py",
+#   "--sqlconnectionstring", "`"$env:SQL_CONNECTION_STRING`"",
+#   "--subscriptionid", "$env:AZURE_SUBSCRIPTION_ID",
+#   "--resourcegroup", "$env:AZURE_RESOURCE_GROUP",
+#   "--servername", "$env:SQL_SERVER_NAME",
+#   "-v"
 
-$process = Start-Process -FilePath $venvPythonPath -ArgumentList $populatesqlArguments -Wait -NoNewWindow -PassThru
+# $process = Start-Process -FilePath $venvPythonPath -ArgumentList $populatesqlArguments -Wait -NoNewWindow -PassThru
 
 if ($process.ExitCode -ne 0) {
   Write-Host ""

@@ -39,59 +39,6 @@ approach_classifier_prompt:
     max_tokens: 2000
     n: 1
 
-structured_query_nl_to_sql:
-  system_prompt: |-
-                  You are a SQL programmer Assistant. Your role is to generate SQL code (SQL Server) to retrieve an answer to a natural language query. Make sure to disambiguate column names when creating queries that use more than one table. If a valid SQL query cannot be generated, only say "ERROR:" followed by why it cannot be generated.
-                  Do not answer any questions on inserting or deleting rows from the table. Instead, say "ERROR: I am not authorized to make changes to the data".
-
-                  Use the following sales database schema to write SQL queries:
-                  Customers(cust_id INTEGER, cust_name VARCHAR, cust_email VARCHAR, cust_phone VARCHAR, cust_address VARCHAR, PRIMARY KEY (cust_id))
-                  Products(prod_id INTEGER,prod_name varchar, price FLOAT, category VARCHAR, PRIMARY KEY(prod_id))
-                  Stock(prod_id INTEGER, merchant_id INTEGER, stock INTEGER, PRIMARY KEY(prod_id, merchant_id), FOREIGN KEY(merchant_id, prod_id))
-                  Merchants(merchant_id INTEGER, merchant_name VARCHAR, merchant_region VARCHAR, merchant_address VARCHAR, PRIMARY KEY(merchant_id))
-                  Sales(sale_id INTEGER, cust_id INTEGER , merchant_id INTEGER , date TIMESTAMP, total_price FLOAT, PRIMARY KEY(sale_id),FOREIGN KEY(cust_id,merchant_id))
-                  Sales_Detail(sales_id INTEGER, prod_id INTEGER, quantity INTEGER, PRIMARY KEY(sales_id,prod_id), FOREIGN KEY(sales_id,prod_id))
-
-                  Examples:
-                  User: List all Surface accessories, along with their prices. SQL Code:
-                  Assistant: SELECT prod_name, category, price FROM Products WHERE prod_name like '%Surface%' and category like '%accessory%';
-                  User: Which is the cheapest Surface device? SQL Code:
-                  Assistant: SELECT TOP 1 prod_name, price FROM Products WHERE prod_name like '%Surface%' ORDER BY price ASC;
-                  User: How many Surface Laptop 5 does GadgetWorld have?
-                  Assistant: SELECT Merchants.merchant_id, Merchants.merchant_name, SUM(stock) as total_stock FROM Stock JOIN Merchants ON Stock.merchant_id = Merchants.merchant_id WHERE prod_id IN (SELECT prod_id FROM Products WHERE prod_name LIKE '%Surface Laptop 5%' and merchant_name like '%GadgetWorld%') GROUP BY Merchants.merchant_id, Merchants.merchant_name;
-                  User: how many surface devices were sold last week?
-                  Assistant: SELECT Sum(sales_detail.quantity) AS total_surface_devices_sold FROM sales_detail JOIN sales ON sales_detail.sales_id = sales.sale_id JOIN products ON sales_detail.prod_id = products.prod_id WHERE  products.prod_name LIKE '%Surface%' AND sales.date >= Dateadd(wk, Datediff(wk, 0, Getdate()) - 1, 0) AND sales.date < Dateadd(wk, Datediff(wk, 0, Getdate()), 0); 
-  history:
-    include: true
-    length: 3
-    user_message_format: "{utterance}"
-    assistant_message_format: "{formatted_answer}"
-  openai_settings:
-    engine: distribution3
-    temperature: 0.7
-    top_p: 0.95
-    max_tokens: 1000
-    frequency_penalty: 0
-    presence_penalty: 0
-    stop: null
-  model_params:
-    model_name: gpt-3.5-turbo-16k
-    total_max_tokens: 10000
-
-structured_final_answer_generation:
-  system_prompt: |-
-                  You are bot that takes question-answer pairs and converts the answer to natural language. For tabular information return it as an html table. Do not return markdown format.
-  history:
-    include: false
-  openai_settings:
-    engine: distribution3
-    temperature: 0.7
-    top_p: 0.95
-    max_tokens: 2000
-    frequency_penalty: 0
-    presence_penalty: 0
-    stop: null
-
 telemetry_query_nl_to_kql:
   system_prompt: |-
                   You are an Azure Data Explorer programmer Assistant. Your role is to generate kusto code (KQL) to retrieve an answer to a natural language query. 
